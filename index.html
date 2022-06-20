@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Budget Calculator</title>
+  </head>
+  <body class="bg-gray-100" onload="hideIncomeDistribution()">
+    <div class="container mx-auto p-5">
+      <div class="flex flex-col gap-4 w-full justify-center items-center">
+        <h1 class="text-2xl font-light">Budget Calculator</h1>
+        <input
+          type="number"
+          id="income"
+          name="income"
+          class="rounded shadow px-4 py-2 w-80"
+          placeholder="Enter income"
+        />
+        <button
+          type="button"
+          id="btnCalculate"
+          class="rounded px-4 py-2 w-80 bg-blue-500 text-white"
+          onclick="calculateBudget()"
+        >
+          Calculate Budget
+        </button>
+
+        <div id="incomeDistribution" class="w-full mt-10">
+          <div class="grid grid-cols-3 w-full">
+            <h3 class="text-xl pb-4">Category</h3>
+            <h3 class="text-xl">Percent</h3>
+            <h3 class="text-xl">Amount</h3>
+
+            <p class="lead py-3 bg-indigo-100 pl-3">Car Fund</p>
+            <p class="lead py-3 bg-indigo-100">25%</p>
+            <p class="lead py-3 bg-indigo-100" id="carFund"></p>
+
+            <p class="lead py-3 pl-3">Tech Fund</p>
+            <p class="lead py-3">20%</p>
+            <p class="lead py-3" id="techFund"></p>
+
+            <p class="lead py-3 bg-indigo-100 pl-3">Emergency Savings</p>
+            <p class="lead py-3 bg-indigo-100">10%</p>
+            <p class="lead py-3 bg-indigo-100" id="emergency"></p>
+
+            <p class="lead py-3 pl-3">Transportation (Gas)</p>
+            <p class="lead py-3">10%</p>
+            <p class="lead py-3" id="transpo"></p>
+
+            <p class="lead py-3 bg-indigo-100 pl-3">Tithes</p>
+            <p class="lead py-3 bg-indigo-100">10%</p>
+            <p class="lead py-3 bg-indigo-100" id="tithes"></p>
+
+            <p class="lead py-3 pl-3">Health &amp; Fitness</p>
+            <p class="lead py-3">5%</p>
+            <p class="lead py-3" id="health"></p>
+
+            <p class="lead py-3 bg-indigo-100 pl-3">Personal Spending</p>
+            <p class="lead py-3 bg-indigo-100">20%</p>
+            <p class="lead py-3 bg-indigo-100" id="personal"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    let hideIncomeDistribution = () => {
+      let incomeDistribution = document.getElementById("incomeDistribution");
+      incomeDistribution.classList.add("invisible");
+    };
+
+    let calculateBudget = () => {
+      let income = document.getElementById("income").value;
+
+      if (!income) {
+        alert("Please enter your income");
+        return false;
+      }
+
+      let budget = [];
+
+      budget[0] = income * 0.25;
+      budget[1] = income * 0.2;
+      budget[2] = income * 0.1;
+      budget[3] = income * 0.1;
+      budget[4] = income * 0.1;
+      budget[5] = income * 0.05;
+      budget[6] = income * 0.2;
+
+      showIncomeDistribution(budget);
+
+      return true;
+    };
+
+    function commafy(num) {
+      var str = num.toString().split(".");
+      if (str[0].length >= 4) {
+        str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, "$1,");
+      }
+      if (str[1] && str[1].length >= 5) {
+        str[1] = str[1].replace(/(\d{3})/g, "$1 ");
+      }
+      return str.join(".");
+    }
+
+    let showIncomeDistribution = (budget) => {
+      let carFund = document.getElementById("carFund");
+      let techFund = document.getElementById("techFund");
+      let emergency = document.getElementById("emergency");
+      let tithes = document.getElementById("tithes");
+      let transpo = document.getElementById("transpo");
+      let health = document.getElementById("health");
+      let personal = document.getElementById("personal");
+      let incomeDistribution = document.getElementById("incomeDistribution");
+
+      carFund.innerHTML = "₱" + commafy(budget[0].toFixed(2));
+      techFund.innerHTML = "₱" + commafy(budget[1].toFixed(2));
+      emergency.innerHTML = "₱" + commafy(budget[2].toFixed(2));
+      transpo.innerHTML = "₱" + commafy(budget[3].toFixed(2));
+      tithes.innerHTML = "₱" + commafy(budget[4].toFixed(2));
+      health.innerHTML = "₱" + commafy(budget[5].toFixed(2));
+      personal.innerHTML = "₱" + commafy(budget[6].toFixed(2));
+
+      incomeDistribution.classList.remove("invisible");
+    };
+  </script>
+</html>
